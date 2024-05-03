@@ -42,14 +42,6 @@ class _HomeState extends State<Home> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      encryptedText = Crypt.decrypt(encryptedText);
-                    });
-                  },
-                  child: const Text("decrypt"),
-                ),
                 const SizedBox(width: 20),
                 ElevatedButton(
                   onPressed: () {
@@ -59,6 +51,15 @@ class _HomeState extends State<Home> {
                     });
                   },
                   child: const Text("encrypt"),
+                ),
+                const SizedBox(width: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      encryptedText = Crypt.decrypt(encryptedText);
+                    });
+                  },
+                  child: const Text("decrypt"),
                 ),
               ],
             ),
