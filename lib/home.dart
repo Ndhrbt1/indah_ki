@@ -13,6 +13,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   var tec1 = TextEditingController();
+  var tec2 = TextEditingController();
   // ignore: prefer_typing_uninitialized_variables
   var encryptedText, plainText;
 
@@ -22,18 +23,34 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
+        centerTitle: true,
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            SizedBox(
+            Container(
+              margin: const EdgeInsets.all(10),
               width: 400,
               child: TextField(
                 controller: tec1,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Input text',
+                  // hintText: 'Input text',
+                ),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.all(10),
+              width: 400,
+              child: TextField(
+                maxLength: 32,
+                controller: tec2,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Input Custome Key (32 Caracter)',
+
                   // hintText: 'Input text',
                 ),
               ),
@@ -47,7 +64,7 @@ class _HomeState extends State<Home> {
                   onPressed: () {
                     plainText = tec1.text;
                     setState(() {
-                      encryptedText = Crypt.encrypt(plainText);
+                      encryptedText = Crypt.encryptFernet(plainText, tec2.text);
                     });
                   },
                   child: const Text("encrypt"),
@@ -56,18 +73,25 @@ class _HomeState extends State<Home> {
                 ElevatedButton(
                   onPressed: () {
                     setState(() {
-                      encryptedText = Crypt.decrypt(encryptedText);
+                      encryptedText = Crypt.decryptFernet(encryptedText, tec2.text);
                     });
                   },
                   child: const Text("decrypt"),
                 ),
               ],
             ),
-            Text(encryptedText == null
-                ? ''
-                : encryptedText is encrypt.Encrypted
-                    ? encryptedText.base64
-                    : encryptedText),
+            const SizedBox(height: 20),
+            SizedBox(
+              width: 400,
+              child: Text(
+                encryptedText == null
+                    ? ''
+                    : encryptedText is encrypt.Encrypted
+                        ? encryptedText.base64
+                        : encryptedText,
+                textAlign: TextAlign.center,
+              ),
+            ),
           ],
         ),
       ),

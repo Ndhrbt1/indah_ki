@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       darkTheme: ThemeData.dark(),
-      home: const Home(title: 'AES Algorithm'),
+      home: const Home(title: 'AES Cryptography Algorithm'),
     );
   }
 }
